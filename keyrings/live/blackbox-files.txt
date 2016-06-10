@@ -1,2 +1,10 @@
+credentials/admin-key.pem
+credentials/admin.pem
+credentials/apiserver-key.pem
+credentials/apiserver.pem
+credentials/ca-key.pem
+credentials/ca.pem
+credentials/worker-key.pem
+credentials/worker.pem
 csd-test.stack-template.json
 kubernetes.pem
