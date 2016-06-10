@@ -1,1 +1,2 @@
 csd-test.stack-template.json
+kubernetes.pem
