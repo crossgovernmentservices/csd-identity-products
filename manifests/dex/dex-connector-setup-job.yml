@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dex-connector-setup
+  labels:
+    app: dex
+spec:
+  template:
+    metadata:
+      name: dex-connector-setup
+      labels:
+        app: dex
+        tier: web
+    spec:
+      volumes:
+      - name: dex
+        secret:
+          secretName: dex
+      containers:
+      - name: dex-connector-setup
+        image: quay.io/coreos/dex:v0.4
+        command: [
+          "/bin/sh", "-c",
+          "/opt/dex/bin/dexctl --db-url=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DEX_POSTGRES_SERVICE_HOST}:${DEX_POSTGRES_SERVICE_PORT}/${POSTGRES_USER}?sslmode=disable set-connector-configs /etc/dex/connectors"
+        ]
+        volumeMounts:
+        - name: dex
+          mountPath: /etc/dex
+          readOnly: true
+        env:
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres
+              key: password
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres
+              key: user
+      restartPolicy: Never

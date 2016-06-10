@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dex-overlord
+  labels:
+    app: dex
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: dex
+        tier: overlord
+    spec:
+      containers:
+        - name: dex-overlord
+          image: quay.io/coreos/dex:v0.4
+          command: [
+            "/bin/sh", "-c",
+            "/opt/dex/bin/dex-overlord --db-url=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DEX_POSTGRES_SERVICE_HOST}:${DEX_POSTGRES_SERVICE_PORT}/${POSTGRES_USER}?sslmode=disable --log-debug=true"
+          ]
+          env:
+          - name: DEX_OVERLORD_ADMIN_API_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: dex
+                key: api-secret
+          - name: DEX_OVERLORD_KEY_SECRETS
+            valueFrom:
+              secretKeyRef:
+                name: dex
+                key: key-secret
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres
+                key: password
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: postgres
+                key: user
