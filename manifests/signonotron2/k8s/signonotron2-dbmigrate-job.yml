@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: signonotron2-dbmigrate
+  labels:
+    app: signonotron2
+spec:
+  template:
+    metadata:
+      name: signonotron2-dbmigrate
+      labels:
+        app: signonotron2
+        tier: signonotron2
+    spec:
+      containers:
+      - name: signonotron2-dbmigrate
+        image: quay.io/kerin/signonotron2
+        command: [
+          "/bin/sh", "-c",
+          "DATABASE_URL=mysql2://root:${MYSQL_ROOT_PASSWORD}@signonotron2-mysql/${MYSQL_DATABASE} REDIS_URL=redis://signonotron2-redis rake db:migrate"
+        ]
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql
+              key: root-password
+        - name: MYSQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: mysql
+              key: database-name
+      restartPolicy: Never

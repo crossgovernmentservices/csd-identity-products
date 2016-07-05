@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: signonotron2
+  labels:
+    app: signonotron2
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: signonotron2
+        tier: web
+    spec:
+      containers:
+        - name: signonotron2
+          image: quay.io/kerin/signonotron2
+          command: [
+            "/bin/sh", "-c",
+            "DATABASE_URL=mysql2://root:${MYSQL_ROOT_PASSWORD}@signonotron2-mysql/${MYSQL_DATABASE} REDIS_URL=redis://signonotron2-redis script/rails s -b 0.0.0.0"
+          ]
+          ports:
+            - containerPort: 3000
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql
+                key: root-password
+          - name: MYSQL_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: mysql
+                key: database-name

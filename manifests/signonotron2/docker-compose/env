@@ -1,0 +1,4 @@
+DATABASE_URL=mysql2://root:password@mysql/signonotron
+REDIS_URL=redis://redis
+MYSQL_ROOT_PASSWORD=password
+MYSQL_DATABASE=signonotron

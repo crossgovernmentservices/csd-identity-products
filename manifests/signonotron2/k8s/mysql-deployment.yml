@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: signonotron2-mysql
+  labels:
+    app: signonotron2
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: signonotron2
+    tier: mysql
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: signonotron2-mysql-pv-claim
+  labels:
+    app: signonotron2
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: signonotron2-mysql
+  labels:
+    app: signonotron2
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: signonotron2
+        tier: mysql
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql
+              key: root-password
+        - name: MYSQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: mysql
+              key: database-name
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql
+              key: user
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql
+              key: password
+        ports:
+        - containerPort: 5432
+          name: postgres
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: signonotron2-mysql-pv-claim

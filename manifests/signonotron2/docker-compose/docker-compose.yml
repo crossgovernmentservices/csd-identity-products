@@ -1,0 +1,24 @@
+version: '2'
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    links:
+      - redis
+      - mysql
+    depends_on:
+      - redis
+      - mysql
+    environment:
+      DATABASE_URL: mysql2://root:password@mysql/signonotron
+      REDIS_URL: redis://redis
+
+  redis:
+    image: redis:3.2.0
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: signonotron
