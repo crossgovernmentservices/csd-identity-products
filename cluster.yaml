@@ -1,13 +1,13 @@
 # Unique name of Kubernetes cluster. In order to deploy
 # more than one cluster into the same AWS account, this
 # name must not conflict with an existing cluster.
-clusterName: csd-test
+clusterName: csd-identity
 
 # DNS name routable to the Kubernetes controller nodes
 # from worker nodes and external clients. Configure the options
 # below if you'd like kube-aws to create a Route53 record sets/hosted zones
 # for you.  Otherwise the deployer is responsible for making this name routable
-externalDNSName: csd-test-k8s.civilservice.digital
+externalDNSName: identity-k8s.civilservice.digital
 
 # CoreOS release channel to use. Currently supported options: [ alpha, beta ]
 # See coreos.com/releases for more information
@@ -17,7 +17,7 @@ externalDNSName: csd-test-k8s.civilservice.digital
 createRecordSet: true
 
 # TTL in seconds for the Route53 RecordSet created if createRecordSet is set to true.
-recordSetTTL: 300
+recordSetTTL: 60
 
 # The name of the hosted zone to add the externalDNSName to,
 # E.g: "google.com".  This needs to already exist, kube-aws will not create
@@ -26,7 +26,7 @@ hostedZone: "civilservice.digital"
 
 # Name of the SSH keypair already loaded into the AWS
 # account being used to deploy this cluster.
-keyName: kubernetes
+keyName: k8s-identity
 
 # Region to provision Kubernetes cluster
 region: eu-west-1
@@ -35,7 +35,7 @@ region: eu-west-1
 availabilityZone: eu-west-1a
 
 # ARN of the KMS key used to encrypt TLS assets.
-kmsKeyArn: "arn:aws:kms:eu-west-1:959168706924:key/efa1186b-6376-4839-a0b9-aede490e412d"
+kmsKeyArn: "arn:aws:kms:eu-west-1:290289616051:key/b99f499f-e8b8-43f2-a735-c67fd8bb99e9"
 
 # Instance type for controller node
 #controllerInstanceType: m3.medium
@@ -44,7 +44,7 @@ kmsKeyArn: "arn:aws:kms:eu-west-1:959168706924:key/efa1186b-6376-4839-a0b9-aede4
 #controllerRootVolumeSize: 30
 
 # Number of worker nodes to create
-workerCount: 2
+workerCount: 3
 
 # Instance type for worker nodes
 #workerInstanceType: m3.medium
@@ -80,7 +80,7 @@ workerCount: 2
 # dnsServiceIP: 10.3.0.10
 
 # Version of hyperkube image to use. This is the tag for the hyperkube image repository.
-# kubernetesVersion: v1.2.3_coreos.0
+kubernetesVersion: v1.3.0_coreos.0
 
 # Hyperkube image repository to use.
 # hyperkubeImageRepo: quay.io/coreos/hyperkube
@@ -92,4 +92,4 @@ workerCount: 2
 # AWS Tags for cloudformation stack resources
 stackTags:
  Name: "Kubernetes"
- Environment: "CSD Test"
+ Environment: "CSD Identity"
