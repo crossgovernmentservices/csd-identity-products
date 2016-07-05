@@ -8,4 +8,3 @@ credentials/worker-key.pem
 credentials/worker.pem
 csd-test.stack-template.json
 k8s-identity.pem
-kubernetes.pem
