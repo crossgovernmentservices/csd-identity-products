@@ -13,3 +13,4 @@ stack-template.json
 /credentials/worker-key.pem
 /credentials/worker.pem
 /k8s-identity.pem
+/manifests/forgerock/k8s/secrets/openidm-postgres.yml
