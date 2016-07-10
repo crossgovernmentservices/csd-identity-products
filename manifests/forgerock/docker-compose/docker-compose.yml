@@ -22,3 +22,13 @@ services:
      - "8081:8080"
     links:
      - openidm-postgres:postgres
+
+  opendj:
+    image: forgerock/opendj:latest
+    ports:
+     - "389:389"
+    environment:
+      BOOTSTRAP: /opt/opendj/bootstrap/cts/setup.sh
+    volumes:
+      - /tmp/opendj:/opt/opendj/data
+      - ./secrets:/var/secrets/opendj
