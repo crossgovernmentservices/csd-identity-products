@@ -1,7 +1,24 @@
 version: '2'
 services:
+
   openam:
     image: forgerock/openam:latest
     ports:
       - "8080:8080"
       - "8443:8443"
+
+  openidm-postgres:
+    image: forgerock/openidm-postgres
+    volumes:
+      - /tmp/pg:/var/lib/postgresql/data/pgdata
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_PASSWORD: openidm
+      POSTGRES_USER: openidm
+
+  openidm:
+    image: forgerock/openidm:latest
+    ports:
+     - "8081:8080"
+    links:
+     - openidm-postgres:postgres
