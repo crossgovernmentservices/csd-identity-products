@@ -1,0 +1,38 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: openidm
+  labels:
+    app: openidm
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: openidm
+        tier: web
+    spec:
+      containers:
+        - name: openidm
+          image: forgerock/openidm:latest
+          ports:
+            - containerPort: 8080
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: openidm
+  labels:
+    app: openidm
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: openidm
+    tier: web
+  type: LoadBalancer
