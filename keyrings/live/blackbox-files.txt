@@ -8,3 +8,4 @@ credentials/worker-key.pem
 credentials/worker.pem
 csd-test.stack-template.json
 k8s-identity.pem
+manifests/forgerock/k8s/secrets/openidm-postgres.yml
