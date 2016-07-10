@@ -1,0 +1,7 @@
+version: '2'
+services:
+  openam:
+    image: forgerock/openam:latest
+    ports:
+      - "8080:8080"
+      - "8443:8443"
