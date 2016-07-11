@@ -43,3 +43,19 @@ spec:
               secretKeyRef:
                 name: postgres
                 key: user
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: dex
+  name: dex-worker
+spec:
+  ports:
+  - port: 80
+    targetPort: 5556
+  selector:
+    app: dex
+    tier: worker
+  type: LoadBalancer
