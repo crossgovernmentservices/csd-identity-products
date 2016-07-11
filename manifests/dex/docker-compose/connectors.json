@@ -1,0 +1,14 @@
+[
+    {
+        "type": "local",
+        "id": "local"
+    },
+    {
+        "type": "oidc",
+        "id": "google",
+        "issuerURL": "https://accounts.google.com",
+        "clientID": "190034726837-2bitllt1psrigbluadeqv0e1t6qr2g0g.apps.googleusercontent.com",
+        "clientSecret": "vbLK_ORnkFY3QKVDe4NuC0fa",
+        "trustedEmailProvider": true
+    }
+]
