@@ -1,0 +1,21 @@
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: dex
+  labels:
+    name: dex
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: signonotron2
+
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: forgerock
+  labels:
+    name: forgerock
