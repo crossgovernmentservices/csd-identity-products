@@ -19,3 +19,11 @@ metadata:
   name: forgerock
   labels:
     name: forgerock
+
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: suemybrother
+  labels:
+    name: suemybrother
