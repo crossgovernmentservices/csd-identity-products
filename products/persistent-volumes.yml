@@ -14,19 +14,19 @@ spec:
     volumeID: vol-91b6cf12
 
 ---
-# apiVersion: v1
-# kind: PersistentVolume
-# metadata:
-#   name: pv0002
-# spec:
-#   capacity:
-#     storage: 4Gi
-#   accessModes:
-#     - ReadWriteOnce
-#   persistentVolumeReclaimPolicy: Delete
-#   awsElasticBlockStore:
-#     fsType: ext4
-#     volumeID: vol-ac305a2f
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv0002
+spec:
+  capacity:
+    storage: 4Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  awsElasticBlockStore:
+    fsType: ext4
+    volumeID: vol-0f3a408c
 
 ---
 apiVersion: v1
