@@ -1,0 +1,60 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: suemybrother-web
+  labels:
+    app: smb
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: smb
+        tier: web
+    spec:
+      containers:
+        - name: app
+          image: quay.io/kerin/sue-my-brother:latest
+          ports:
+            - containerPort: 3031
+          env:
+          - name: DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: postgres
+                key: user
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres
+                key: password
+          - name: DB_NAME
+            value: smb
+          - name: DB_HOST
+            value: postgres
+          - name: DB_PORT
+            value: "5432"
+        - name: nginx
+          image: quay.io/kerin/nginx-wsgi-proxy:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: APP_HOST
+              value: localhost
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: suemybrother
+  labels:
+    app: smb
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: smb
+    tier: web
+  type: LoadBalancer
