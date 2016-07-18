@@ -1,0 +1,78 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: opendj
+  labels:
+    app: opendj
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: opendj
+        tier: ldap
+    spec:
+      containers:
+        - name: opendj
+          image: forgerock/opendj:latest
+          ports:
+            - containerPort: 389
+          volumeMounts:
+          - name: opendj-data
+            mountPath: /opt/opendj/data
+          - name: opendj-secrets
+            mountPath: /var/secrets/opendj
+          env:
+          - name: BOOTSTRAP
+            value: /opt/opendj/bootstrap/cts/setup.sh
+      volumes:
+      - name: opendj-data
+        persistentVolumeClaim:
+          claimName: opendj-data
+      - name: opendj-secrets
+        persistentVolumeClaim:
+          claimName: opendj-secrets
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: opendj-data
+  labels:
+    app: opendj
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: opendj-secrets
+  labels:
+    app: opendj
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: opendj
+  labels:
+    app: opendj
+spec:
+  ports:
+    - port: 389
+  selector:
+    app: opendj
+    tier: ldap

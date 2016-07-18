@@ -57,3 +57,33 @@ spec:
   awsElasticBlockStore:
     fsType: ext4
     volumeID: vol-e4b0c967
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv0005
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  awsElasticBlockStore:
+    fsType: ext4
+    volumeID: vol-9c1a551f
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv0006
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  awsElasticBlockStore:
+    fsType: ext4
+    volumeID: vol-781b54fb
