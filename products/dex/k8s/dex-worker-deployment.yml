@@ -18,7 +18,7 @@ spec:
           image: quay.io/coreos/dex:v0.5.1
           command: [
             "/bin/sh", "-c",
-            "/opt/dex/bin/dex-worker --listen=http://0.0.0.0:5556 --db-url=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DEX_POSTGRES_SERVICE_HOST}:${DEX_POSTGRES_SERVICE_PORT}/${POSTGRES_USER}?sslmode=disable --email-cfg=/opt/dex/email/emailer.json --enable-registration=true --log-debug=true"
+            "/opt/dex/bin/dex-worker --listen=http://0.0.0.0:5556 --issuer=${ISSUER_DOMAIN_PROTOCOL}://${POD_NAMESPACE}.${ISSUER_DOMAIN_SUFFIX} --db-url=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DEX_POSTGRES_SERVICE_HOST}:${DEX_POSTGRES_SERVICE_PORT}/${POSTGRES_USER}?sslmode=disable --email-cfg=/opt/dex/email/emailer.json --enable-registration=true --log-debug=true"
           ]
           ports:
             - containerPort: 5556
@@ -33,6 +33,16 @@ spec:
               secretKeyRef:
                 name: dex
                 key: key-secret
+          - name: ISSUER_DOMAIN_SUFFIX
+            valueFrom:
+              secretKeyRef:
+                name: dex
+                key: issuer-domain-suffix
+          - name: ISSUER_DOMAIN_PROTOCOL
+            valueFrom:
+              secretKeyRef:
+                name: dex
+                key: issuer-domain-protocol
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
@@ -43,6 +53,10 @@ spec:
               secretKeyRef:
                 name: postgres
                 key: user
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
 
 ---
 apiVersion: v1
