@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: dex-worker
-          image: quay.io/coreos/dex:v0.4
+          image: quay.io/coreos/dex:v0.5.1
           command: [
             "/bin/sh", "-c",
             "/opt/dex/bin/dex-worker --listen=http://0.0.0.0:5556 --db-url=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DEX_POSTGRES_SERVICE_HOST}:${DEX_POSTGRES_SERVICE_PORT}/${POSTGRES_USER}?sslmode=disable --email-cfg=/opt/dex/email/emailer.json --enable-registration=true --log-debug=true"
