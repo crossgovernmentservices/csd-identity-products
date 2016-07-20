@@ -2,7 +2,8 @@ version: '2'
 services:
 
   openam:
-    image: forgerock/openam:latest
+    # image: quay.io/kerin/openam:14.0.0-20160719.080722-660
+    build: openam/
     ports:
       - "8080:8080"
       - "8443:8443"
