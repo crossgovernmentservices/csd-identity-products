@@ -16,11 +16,10 @@ spec:
     spec:
       containers:
         - name: openam
-          image: forgerock/openam:latest
+          image: quay.io/kerin/openam:13.0.0
           ports:
             - containerPort: 8080
             - containerPort: 8443
-
 
 ---
 apiVersion: v1
