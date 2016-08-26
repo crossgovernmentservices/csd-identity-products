@@ -6,7 +6,7 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
   overlord:
-    image: andyhd/csd-sso-dex:v4
+    image: andyhd/csd-sso-dex:latest
     ports:
       - "5557:5557"
     command: "/opt/dex/bin/dex-overlord"
@@ -24,7 +24,7 @@ services:
     volumes:
       - ".:/opt/dex/connectors"
   worker:
-    image: andyhd/csd-sso-dex:v4
+    image: andyhd/csd-sso-dex:latest
     ports:
      - "5556:5556"
     links:
