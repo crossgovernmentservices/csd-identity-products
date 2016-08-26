@@ -1,45 +1,45 @@
 version: '2'
 services:
-
   postgres:
     image: postgres:9.5.3
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-
-  dex-overlord:
-    image: quay.io/coreos/dex:v0.4
-    command: [
-      "/opt/dex/bin/dex-overlord",
-      "--db-url=postgres://user:password@postgres:5432/user?sslmode=disable",
-      "--log-debug=true"
-    ]
+  overlord:
+    image: andyhd/csd-sso-dex:v4
+    ports:
+      - "5557:5557"
+    command: "/opt/dex/bin/dex-overlord"
     environment:
       DEX_OVERLORD_KEY_SECRETS: /LJD4gP8BE0lDB1NFPGTUO36/m6pHx6v3XngfEs1oMc=
       DEX_OVERLORD_ADMIN_API_SECRET: +F4ckJzcy+sWPTaeFupcGBRjxols8Mohu5cxIv2kI9Pw2V24qeZ7eRk9pKk1IyPDagAUgisNjQBF7fHqp4JFuVzadLJQvgVlT0Awq5JFRaV53CRDaEoQ4xuMJk+AC7ivUmeknpqpSoVnvjZt1wakxinj0/NoFIXNokWZphPZVkY=
+      DEX_OVERLORD_ADMIN_LISTEN: http://0.0.0.0:5557
+      DEX_OVERLORD_DB_URL: postgres://user:password@postgres:5432/user?sslmode=disable
+      DEX_OVERLORD_LOG_DEBUG: "true"
+      DEX_OVERLORD_LOG_TIMESTAMPS: "true"
     links:
       - postgres
     depends_on:
       - postgres
     volumes:
       - ".:/opt/dex/connectors"
-
-  dex-worker:
-    image: quay.io/coreos/dex:v0.4
+  worker:
+    image: andyhd/csd-sso-dex:v4
     ports:
      - "5556:5556"
     links:
      - postgres
     depends_on:
       - postgres
-    command: [
-      "/opt/dex/bin/dex-worker",
-      "--listen=http://0.0.0.0:5556",
-      "--db-url=postgres://user:password@postgres:5432/user?sslmode=disable",
-      "--email-cfg=/opt/dex/email/emailer.json",
-      "--enable-registration=true",
-      "--log-debug=true"
-    ]
+      - overlord
+    command: "/opt/dex/bin/dex-worker"
     environment:
       DEX_WORKER_KEY_SECRETS: /LJD4gP8BE0lDB1NFPGTUO36/m6pHx6v3XngfEs1oMc=
       DEX_WORKER_ADMIN_API_SECRET: +F4ckJzcy+sWPTaeFupcGBRjxols8Mohu5cxIv2kI9Pw2V24qeZ7eRk9pKk1IyPDagAUgisNjQBF7fHqp4JFuVzadLJQvgVlT0Awq5JFRaV53CRDaEoQ4xuMJk+AC7ivUmeknpqpSoVnvjZt1wakxinj0/NoFIXNokWZphPZVkY=
+      DEX_WORKER_DB_URL: postgres://user:password@postgres:5432/user?sslmode=disable
+      DEX_WORKER_LISTEN: http://0.0.0.0:5556
+      DEX_WORKER_EMAIL_CFG: /opt/dex/email/emailer.json
+      DEX_WORKER_ENABLE_AUTOMATIC_REGISTRATION: "true"
+      DEX_WORKER_LOG_DEBUG: "true"
+      DEX_WORKER_LOG_TIMESTAMPS: "true"
+      DEX_WORKER_ISSUER: "http://dex.example.com:5556"

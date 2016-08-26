@@ -7,8 +7,8 @@
         "type": "oidc",
         "id": "google",
         "issuerURL": "https://accounts.google.com",
-        "clientID": "190034726837-2bitllt1psrigbluadeqv0e1t6qr2g0g.apps.googleusercontent.com",
-        "clientSecret": "vbLK_ORnkFY3QKVDe4NuC0fa",
+        "clientID": "923516273086-j9l1uof2340arhu4onv0cp0c59seq6m7.apps.googleusercontent.com",
+        "clientSecret": "__P41UHsQWnkGeU-C1SClt2D",
         "trustedEmailProvider": true
     }
 ]
