@@ -10,5 +10,13 @@
         "clientID": "923516273086-j9l1uof2340arhu4onv0cp0c59seq6m7.apps.googleusercontent.com",
         "clientSecret": "__P41UHsQWnkGeU-C1SClt2D",
         "trustedEmailProvider": true
+    },
+    {
+        "type": "oidc",
+        "id": "azuread",
+        "issuerURL": "https://sts.windows.net/24768f32-5ca8-4353-bc96-0fb52d7e6665/",
+        "clientID": "18d99aad-e8db-4e44-a453-794ddc4b32b1",
+        "clientSecret": "nsjw7KVIxNUJ9HUxmI3lisiOzrodtupd2yXONi20fnI=",
+        "trustedEmailProvider": true
     }
 ]
