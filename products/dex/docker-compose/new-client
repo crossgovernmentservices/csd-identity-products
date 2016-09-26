@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+    echo Missing callback URL
+    exit 1
+fi
+
+docker exec -it dockercompose_overlord_1 \
+    /opt/dex/bin/dexctl \
+    --db-url=postgres://user:password@postgres:5432/user?sslmode=disable \
+    new-client $1
