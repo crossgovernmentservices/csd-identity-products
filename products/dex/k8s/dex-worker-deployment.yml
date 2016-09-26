@@ -15,14 +15,15 @@ spec:
     spec:
       containers:
         - name: dex-worker
-          image: quay.io/coreos/dex:v0.5.1
+          image: andyhd/csd-sso-dex:v4
           command: [
-            "/bin/sh", "-c",
-            "/opt/dex/bin/dex-worker --listen=http://0.0.0.0:5556 --issuer=${ISSUER_DOMAIN_PROTOCOL}://${POD_NAMESPACE}.${ISSUER_DOMAIN_SUFFIX} --db-url=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DEX_POSTGRES_SERVICE_HOST}:${DEX_POSTGRES_SERVICE_PORT}/${POSTGRES_USER}?sslmode=disable --email-cfg=/opt/dex/email/emailer.json --enable-registration=true --log-debug=true"
+            "/opt/dex/bin/dex-worker"
           ]
           ports:
             - containerPort: 5556
           env:
+          - name: DEX_WORKER_LISTEN
+            value: http://0.0.0.0:5556
           - name: DEX_WORKER_ADMIN_API_SECRET
             valueFrom:
               secretKeyRef:
@@ -57,6 +58,18 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
+          - name: DEX_WORKER_DB_URL
+            value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(DEX_POSTGRES_SERVICE_HOST):$(DEX_POSTGRES_SERVICE_PORT)/$(POSTGRES_USER)?sslmode=disable
+          - name: DEX_WORKER_EMAIL_CFG
+            value: /opt/dex/email/emailer.json
+          - name: DEX_WORKER_ENABLE_AUTOMATIC_REGISTRATION
+            value: "true"
+          - name: DEX_WORKER_LOG_DEBUG
+            value: "true"
+          - name: DEX_WORKER_LOG_TIMESTAMPS
+            value: "true"
+          - name: DEX_WORKER_ISSUER
+            value: $(ISSUER_DOMAIN_PROTOCOL)://$(POD_NAMESPACE).$(ISSUER_DOMAIN_SUFFIX)
 
 ---
 apiVersion: v1

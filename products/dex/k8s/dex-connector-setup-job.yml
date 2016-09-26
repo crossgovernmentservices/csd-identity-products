@@ -18,10 +18,11 @@ spec:
           secretName: dex
       containers:
       - name: dex-connector-setup
-        image: quay.io/coreos/dex:v0.5.1
+        image: andyhd/csd-sso-dex:v4
         command: [
-          "/bin/sh", "-c",
-          "/opt/dex/bin/dexctl --db-url=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DEX_POSTGRES_SERVICE_HOST}:${DEX_POSTGRES_SERVICE_PORT}/${POSTGRES_USER}?sslmode=disable set-connector-configs /etc/dex/connectors"
+          "/opt/dex/bin/dexctl",
+          "set-connector-configs",
+          "/etc/dex/connectors"
         ]
         volumeMounts:
         - name: dex
@@ -38,4 +39,8 @@ spec:
             secretKeyRef:
               name: postgres
               key: user
+        - name: DEXCTL_DB_URL
+          value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(DEX_POSTGRES_SERVICE_HOST):$(DEX_POSTGRES_SERVICE_PORT)/$(POSTGRES_USER)?sslmode=disable
+        - name: DEXCTL_LOG_DEBUG
+          value: "true"
       restartPolicy: Never
