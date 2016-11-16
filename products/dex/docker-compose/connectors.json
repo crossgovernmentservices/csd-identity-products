@@ -1,22 +1,78 @@
 [
     {
-        "type": "local",
-        "id": "local"
-    },
-    {
         "type": "oidc",
         "id": "google",
         "issuerURL": "https://accounts.google.com",
         "clientID": "923516273086-j9l1uof2340arhu4onv0cp0c59seq6m7.apps.googleusercontent.com",
         "clientSecret": "__P41UHsQWnkGeU-C1SClt2D",
+        "trustedEmailProvider": true,
+        "department":"Government Digital Service",
+        "helpText":"All @digital.cabinet-office.gov.uk accounts"
+    },
+    {
+        "type": "oidc",
+        "department": "DWP",
+        "id": "DWP",
+        "issuerURL": "https://accounts.google.com",
+        "helpText": "All DWP staff (including UC Digital)"
+    },
+    {
+        "type": "oidc",
+        "department": "Home Office",
+        "id": "HO",
+        "issuerURL": "https://accounts.google.com",
+        "helpText": "Office 365 and Keycloack users (including HMPO). Poise desktop choose 'none of the above'"
+    },
+    {
+        "type": "oidc",
+        "department": "Ministry of Justice",
+        "id": "MOJ",
+        "issuerURL": "https://accounts.google.com",
+        "helpText": "All staff using Google, Office365 or MOJ-SSO accounts to sign into Digital services. Otherwise choose 'none of the above'"
+    },
+    {
+        "type": "oidc",
+        "department": "Cabinet Office",
+        "issuerURL": "https://accounts.google.com",
+        "id": "CO",
+        "helpText": "CO staff on the Official platform. @cabinet-office.gov.uk accounts only."
+    },
+    {
+        "type": "oidc",
+        "department": "HMRC",
+        "id": "HMRC",
+        "issuerURL": "https://accounts.google.com",
+        "helpText": "@hmrc.gov.uk and @digital.hmrc.gov.uk accounts"
+    },
+    {
+        "type": "oidc",
+        "department": "BEIS",
+        "id": "BEIS",
+        "issuerURL": "https://accounts.google.com",
+        "helpText": "Includes staff with DECC and BIS emails"
+    },
+    {
+        "type": "oidc",
+        "department": "Transport",
+        "helpText": "All DVLA, DVSA, DfT staff",
+        "id": "azuread",
+        "issuerURL": "https://sts.windows.net/24768f32-5ca8-4353-bc96-0fb52d7e6665/",
+        "clientID": "18d99aad-e8db-4e44-a453-794ddc4b32b1",
+        "clientSecret": "UiK3BiJ6tMEW1nnx4beOHaHsenXFSDJvh0r9Pbrj/28=",
         "trustedEmailProvider": true
     },
     {
         "type": "oidc",
-        "id": "azuread",
-        "issuerURL": "https://sts.windows.net/24768f32-5ca8-4353-bc96-0fb52d7e6665/",
-        "clientID": "18d99aad-e8db-4e44-a453-794ddc4b32b1",
-        "clientSecret": "nsjw7KVIxNUJ9HUxmI3lisiOzrodtupd2yXONi20fnI=",
-        "trustedEmailProvider": true
+        "department": "DIT",
+        "id": "DIT",
+        "issuerURL": "https://accounts.google.com",
+        "helpText": "Only staff on Google or Office365. "
+    },
+    {
+        "type": "oidc",
+        "department": "DCMS",
+        "id": "DCMS",
+        "issuerURL": "https://accounts.google.com",
+        "helpText": "Staff using F5 or Google Apps."
     }
 ]
